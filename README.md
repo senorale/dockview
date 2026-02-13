@@ -1,6 +1,7 @@
 # DockView
 
 A terminal UI for managing Docker containers with vim motions. Containers are grouped by Docker Compose project for easy navigation.
+<img width="1368" height="941" alt="Screenshot 2026-02-13 at 1 09 45 PM" src="https://github.com/user-attachments/assets/33f78423-ec31-4324-b33e-faa99d5304ec" />
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey)
