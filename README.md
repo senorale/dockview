@@ -4,6 +4,9 @@ A terminal UI for managing Docker containers with vim motions. Containers are gr
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+> **Note:** Live log viewing (`l` key) requires [iTerm2](https://iterm2.com/). If you use a different terminal, update the AppleScript in `dockview.py`.
 
 ## Features
 
@@ -59,8 +62,6 @@ python3 dockview.py
 **Runtime (standalone binary):** None — everything is bundled.
 
 **Build time:** Python 3.9+, `textual`, `pyinstaller` (installed automatically by `make`).
-
-**Log formatting:** The `l` keybinding opens logs in iTerm2 and pipes through `dockview-fmt`. If you use a different terminal, update the AppleScript in `dockview.py`.
 
 ## Tech Stack
 
