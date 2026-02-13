@@ -92,6 +92,8 @@ class DockView(App):
         Binding("G", "go_bottom", "Bottom", show=False),
         Binding("h", "toggle_filter", "Hide/Show Stopped"),
         Binding("R", "restart_project", "Restart Project"),
+        Binding("S", "start_project", "Start Project"),
+        Binding("C", "stop_project", "Stop Project"),
         Binding("f5", "refresh", "Refresh"),
     ]
 
@@ -251,6 +253,28 @@ class DockView(App):
                 pool.map(lambda name: docker_cmd("restart", name), containers)
             self.app.call_from_thread(self.load_containers)
             self.notify(f"{project} restarted ({len(containers)} containers)", severity="information")
+
+    @work(thread=True)
+    def action_start_project(self) -> None:
+        project = self.get_selected_project()
+        if project:
+            containers = self.get_containers_for_project(project)
+            self.notify(f"Starting all {len(containers)} containers in {project}...")
+            with ThreadPoolExecutor() as pool:
+                pool.map(lambda name: docker_cmd("start", name), containers)
+            self.app.call_from_thread(self.load_containers)
+            self.notify(f"{project} started ({len(containers)} containers)", severity="information")
+
+    @work(thread=True)
+    def action_stop_project(self) -> None:
+        project = self.get_selected_project()
+        if project:
+            containers = self.get_containers_for_project(project)
+            self.notify(f"Stopping all {len(containers)} containers in {project}...")
+            with ThreadPoolExecutor() as pool:
+                pool.map(lambda name: docker_cmd("stop", name), containers)
+            self.app.call_from_thread(self.load_containers)
+            self.notify(f"{project} stopped ({len(containers)} containers)", severity="information")
 
     def action_logs(self) -> None:
         name = self.get_selected_container()
