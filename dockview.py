@@ -90,11 +90,13 @@ class DockView(App):
         Binding("c", "stop", "Stop"),
         Binding("l", "logs", "Logs"),
         Binding("G", "go_bottom", "Bottom", show=False),
+        Binding("h", "toggle_filter", "Hide/Show Stopped"),
         Binding("R", "restart_project", "Restart Project"),
         Binding("f5", "refresh", "Refresh"),
     ]
 
     _last_key = ""
+    _show_all = True
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -135,13 +137,19 @@ class DockView(App):
                 status = c.get("Status", "")
                 ports = parse_host_ports(c.get("Ports", ""))
 
-                if "Up" in status:
+                is_running = "Up" in status
+
+                if is_running:
                     status_display = f"[green]{status}[/green]"
                     running += 1
                 elif "Exited" in status:
                     status_display = f"[red]{status}[/red]"
                 else:
                     status_display = f"[yellow]{status}[/yellow]"
+
+                if not self._show_all and not is_running:
+                    total += 1
+                    continue
 
                 table.add_row(
                     f"[bold cyan]{project}[/bold cyan]",
@@ -162,7 +170,8 @@ class DockView(App):
         if restore_idx is not None:
             table.move_cursor(row=restore_idx)
 
-        status_bar.update(f" {running}/{total} running")
+        filter_label = "all" if self._show_all else "running only"
+        status_bar.update(f" {running}/{total} running | filter: {filter_label}")
 
     def get_selected_container(self) -> str | None:
         table = self.query_one(DataTable)
@@ -258,6 +267,12 @@ class DockView(App):
             '''
             subprocess.Popen(["osascript", "-e", script])
             self.notify(f"Opened logs for {name} in new terminal")
+
+    def action_toggle_filter(self) -> None:
+        self._show_all = not self._show_all
+        self.load_containers()
+        label = "all" if self._show_all else "running only"
+        self.notify(f"Showing: {label}")
 
     def action_refresh(self) -> None:
         self.load_containers()

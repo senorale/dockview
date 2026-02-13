@@ -29,6 +29,7 @@ A terminal UI for managing Docker containers with vim motions. Containers are gr
 | `c` | Stop container |
 | `R` | Restart all containers in project |
 | `l` | Open live logs in new iTerm2 tab |
+| `h` | Toggle between all / running only |
 | `F5` | Force refresh |
 | `q` | Quit |
 
