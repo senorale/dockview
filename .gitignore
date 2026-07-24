@@ -1,6 +1,4 @@
-build/
+node_modules/
 dist/
-*.spec
-!dockview.spec
-__pycache__/
-*.pyc
+*.log
+.DS_Store
