@@ -1,10 +1,14 @@
 # DockView
 
-A terminal UI for managing Docker containers with vim motions. Containers are grouped by Docker Compose project for easy navigation.
+Vim-motion TUI: container status + prettified logs in one screen.
+
+I like Docker Desktop but got tired of clicking through it for something I use every day. dockview is a vim-motion TUI: live status and exposed port for every container in the current repo, hit enter for that container's prettified logs, esc back. No new tab, no `docker logs` incantation.
 
 ![Node](https://img.shields.io/badge/Node-20%2B-green)
 ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey)
 ![License](https://img.shields.io/badge/License-MIT-green)
+
+![dockview landing view — containers grouped by project with status and ports](docs/dockview-landing.png)
 
 ## Features
 
@@ -31,6 +35,8 @@ A terminal UI for managing Docker containers with vim motions. Containers are gr
 | `l` / `Enter` | Toggle live log preview for selected container |
 | `h` | Toggle all / running only |
 | `q` | Quit |
+
+![dockview log preview — prettified container logs in-pane](docs/dockview-logs.png)
 
 ### Preview mode
 
